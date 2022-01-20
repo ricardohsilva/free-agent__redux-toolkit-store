@@ -1,0 +1,44 @@
+.cardItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #f5f6f7;
+    height: 30rem;
+    padding: 2rem 0.5rem;
+    align-items: center;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.cardInner {
+    text-align: center;
+}
+
+.cardImage {
+    transition: all 1s;
+    cursor: pointer;
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+.cardImageBox {
+    height: 50%;
+    flex-direction: column;
+}
+
+.cardItem:hover > .cardImageBox > .cardImage {
+    transform: scale(1.1);
+    transition: all 1s;
+}
+
+.cardName {
+    color: #041562;
+}
+
+.cardButton{
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}

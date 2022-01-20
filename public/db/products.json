@@ -1,0 +1,51 @@
+[
+    {
+        "id": 1,
+        "name": "Animal Crossing",
+        "imageSrc": "https://static-ca.gamestop.ca/images/products/751287/2med.jpg",
+        "price": "79.00",
+        "videoUrl": "https://www.youtube.com/embed/sRWjpjNVOCM"
+    },
+    {
+        "id": 2,
+        "name": "Mario Kart 8 Deluxe",
+        "imageSrc": "https://static-ca.gamestop.ca/images/products/729218/2med.jpg",
+        "price": "89.00",
+        "videoUrl": "https://www.youtube.com/embed/GHz6s5iVpYU"
+    },
+    {
+        "id": 3,
+        "name": "Super Smash Bross. Ultimate",
+        "imageSrc": "https://static-ca.gamestop.ca/images/products/739712/2med.jpg",
+        "price": "79.00",
+        "videoUrl": "https://www.youtube.com/embed/WLu7e8RZoYc"
+    },
+    {
+        "id": 4,
+        "name": "Nintendo Switch with Neon Blue and Neon Red",
+        "imageSrc": "https://static-ca.gamestop.ca/images/products/748258/2med.jpg",
+        "price": "499.00",
+        "videoUrl": "https://www.youtube.com/embed/J-iUQoV6d2w"
+    },
+    {
+        "id": 5,
+        "name": "Biogenik Ess XBOX Gaming Headset",
+        "imageSrc": "https://static-ca.gamestop.ca/images/products/755558/3max.jpg",
+        "price": "779.00",
+        "videoUrl": "https://www.youtube.com/embed/2x7hSm_3wbk"
+    },
+    {
+        "id": 6,
+        "name": "Mario + Rabbids Sparks of Hope",
+        "imageSrc": "https://static-ca.gamestop.ca/images/products/761533/3max.jpg",
+        "price": "99.00",
+        "videoUrl": "https://www.youtube.com/embed/VHIuHMv3t88"
+    },
+    {
+        "id": 7,
+        "name": "Mario + Rabbids Sparks of Hope",
+        "imageSrc": "https://assets.nintendo.com/image/upload/c_pad,f_auto,h_613,q_auto,w_1089/ncom/en_US/games/switch/m/metroid-dread-switch/hero?v=2021121623",
+        "price": "99.00",
+        "videoUrl": "https://www.youtube.com/embed/AOvefm5U250"
+    }
+]
