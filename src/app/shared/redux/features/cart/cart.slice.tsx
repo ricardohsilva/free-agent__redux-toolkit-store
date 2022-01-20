@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import ProductModel from '../../../models/product.model';
 import { RootState } from '../../store';
 
 
 // STATE INTERFACE
 export interface CartState {
-    cart: [];
+    cart: ProductModel[];
 }
 
 // INITIAL STATE
@@ -24,14 +25,18 @@ export const cartSlice = createSlice({
     initialState,
     reducers: {
         getCart: (state, action: PayloadAction<string>) => {
-            console.log(action)
             return state;
+        },
+        addToCart: (state, action: PayloadAction<ProductModel>) => {
+            console.log('aqui')
+            state.cart.push(action.payload)
+            // return state;
         },
     },
 
 });
 
 // Action creators are generated for each case reducer function
-export const { getCart } = cartSlice.actions
+export const { getCart, addToCart } = cartSlice.actions
 
 export default cartSlice.reducer

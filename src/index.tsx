@@ -5,6 +5,7 @@ import { store } from './app/shared/redux/store';
 import { Provider } from 'react-redux';
 import HomePage from "./app/pages/home";
 import ProductDetailsPage from "./app/pages/product-details";
+import CartPage from "./app/pages/cart";
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />}></Route>
+          <Route path="/cart" element={<CartPage />}></Route>
           <Route path="/product/:id" element={<ProductDetailsPage />}></Route>
         </Routes>
       </BrowserRouter>

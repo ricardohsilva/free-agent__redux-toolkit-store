@@ -2,7 +2,6 @@
     height: 20rem;
     background-color: #282c34;
     position: relative;
-
 }
 
 .headerWrapper {
@@ -64,4 +63,25 @@
 .headerInputResultsItem:hover {
     background-color: #6f4cb6;
     color: white;
+}
+
+.headerCartContainer {
+    height: 60px;
+    position: relative;
+    margin-top: 1rem;
+    width: 80px;
+    background-color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.cartImage {
+    position: absolute;
+    top: 40%;
+    right: 30%;
+}
+
+.cartGif {
+    height: inherit;
+    width: inherit;
+    border-radius: inherit;
 }

@@ -9,6 +9,7 @@ import ProductModel from "../../shared/models/product.model";
 import Loader from "../../shared/components/loader";
 import Button from "../../shared/components/button";
 import styles from './styles.module.css';
+import { addToCart } from "../../shared/redux/features/cart/cart.slice";
 
 export default function ProductDetailsPage() {
   const { id } = useParams();
@@ -16,9 +17,8 @@ export default function ProductDetailsPage() {
   const [product, setProduct] = useState<ProductModel | undefined>();
   const dispatch = useAppDispatch();
 
-  // Subscribe to Store Products.
-  const data = useAppSelector(selectProducts);
-
+  // Subscribe to Store Products and Cart.
+  const productsData = useAppSelector(selectProducts);
 
   useEffect(() => {
     setIsLoading(true);
@@ -27,11 +27,11 @@ export default function ProductDetailsPage() {
     let product: ProductModel | undefined;
 
     const loadProduct = async () => {
-      if (!data.products.length) {
+      if (!productsData.products.length) {
         product = await productService.getById(Number(id));
         dispatch(getProductsAsync());
       } else {
-        product = data.products.find(item => item.id === Number(id));
+        product = productsData.products.find(item => item.id === Number(id));
       }
 
       if (isMounted) {
@@ -45,7 +45,7 @@ export default function ProductDetailsPage() {
     return () => {
       isMounted = false;
     }
-  }, [data, id]);
+  }, [productsData, id, dispatch]);
 
   return (
 
@@ -67,7 +67,7 @@ export default function ProductDetailsPage() {
 
                 <div className={styles.detailsPriceContainer}>
                   <p><b>Price CAD$ {product.price}</b></p>
-                  <Button label={'Add To Cart'} onClick={() => console.log('oi')} />
+                  <Button label={'Add To Cart'} onClick={() => dispatch(addToCart(product))} />
                 </div>
               </div>
 

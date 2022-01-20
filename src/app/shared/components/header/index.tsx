@@ -1,19 +1,45 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import reduxLogo from '../../../../assets/images/redux-logo.png';
-import styles from './styles.module.css';
+import { useAppSelector } from '../../redux/hooks';
+import { selectCart } from '../../redux/features/cart/cart.slice';
+
 import ProductService from '../../services/product.service';
 import ProductModel from '../../models/product.model';
 
-
+import styles from './styles.module.css';
+import cartGif from '../../../../assets/gifs/cart.gif';
+import cartSvg from '../../../../assets/svg/cart.svg';
+import reduxLogo from '../../../../assets/images/redux-logo.png';
 
 function Header() {
     const refResultsWrapper = useRef<HTMLDivElement>(null);
+    const firstUpdate = useRef<boolean>(true);
     const navigate = useNavigate();
     const [isSearchOpened, setIsSearchOpened] = useState(false);
+    const [shouldAnimateCart, setShouldAnimateCart] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [products, setProducts] = useState<ProductModel[]>([]);
 
+    // Subscribe to Store Cart.
+    const cartData = useAppSelector(selectCart);
+
+    useEffect(() => {
+        let isTimeout;
+        if (!firstUpdate.current) {
+            setShouldAnimateCart(true);
+            if (!isTimeout) {
+                // setIsTimeout(true);
+                isTimeout = true;
+                setTimeout(() => {
+                    isTimeout = false
+                    setShouldAnimateCart(false);
+                }, 3000);
+            }
+        }
+
+        firstUpdate.current = false;
+
+    }, [cartData])
 
     useEffect(() => {
         const productService = new ProductService();
@@ -52,9 +78,9 @@ function Header() {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [refResultsWrapper]);
-    
+
     return (
-      
+
         <div className={styles.header}>
             <div className={styles.headerWrapper}>
                 <div>
@@ -75,6 +101,13 @@ function Header() {
                         </div>
                     }
 
+                </div>
+
+                <div className={styles.headerCartContainer} onClick={() => navigate('/cart')}>
+                    <img src={cartSvg} alt='Cart' className={styles.cartImage} />
+                    {shouldAnimateCart &&
+                        <img className={styles.cartGif} src={cartGif} alt="Animated Cart" />
+                    }
                 </div>
 
                 <img src={reduxLogo} className={styles.headerImage} alt='Redux Logo' />

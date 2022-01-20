@@ -13,10 +13,7 @@ interface IProps {
 function CardItem({ id, name, imageSrc, price, onButtonOneClick, onButtonTwoClick }: IProps) {
     return (
         <div className={styles.cardItem}>
-
-            <div className={styles.cardImageBox}>
-                <img src={imageSrc} alt="Card" className={styles.cardImage} />
-            </div>
+             <div className={styles.backgroundImage} style={{ backgroundImage: `url(${imageSrc})` }}></div>
 
             <div className={styles.cardInner}>
                 <p>
@@ -24,12 +21,6 @@ function CardItem({ id, name, imageSrc, price, onButtonOneClick, onButtonTwoClic
                 </p>
                 <p className={styles.cardName}>
                     <b>{name}</b>
-                </p>
-                <p>
-                    Switch
-                </p>
-                <p>
-                    Stars
                 </p>
             </div>
 

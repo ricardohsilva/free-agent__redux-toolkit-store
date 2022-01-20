@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import ProductModel from '../../../models/product.model'
 import ProductService from '../../../services/product.service';
 import { RootState } from '../../store';
@@ -29,7 +29,7 @@ export const selectProducts = (state: RootState) => {
 // ASYNC TASKS
 export const getProductsAsync = createAsyncThunk(
     'products/getProductsAsync',
-    async (querystring?: string) => {
+    async () => {
         const response = await productService.get();
         return response;
     }
