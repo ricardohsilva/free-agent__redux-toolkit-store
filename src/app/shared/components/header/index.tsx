@@ -1,17 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { selectCart } from '../../redux/features/cart/cart.slice';
 
-import ProductService from '../../services/product.service';
 import ProductModel from '../../models/product.model';
 
 import styles from './styles.module.css';
 import cartImage from '../../../../assets/images/cart.png';
 import reduxLogo from '../../../../assets/images/redux-logo.png';
 import settingsIcon from '../../../../assets/images/settings.png';
+import { getProductsAsync, selectProducts } from '../../redux/features/products/product.slice';
 
 function Header() {
+    const dispatch = useAppDispatch();
     const refResultsWrapper = useRef<HTMLDivElement>(null);
     const firstUpdate = useRef<boolean>(true);
     const isTimeout = useRef<boolean>(false);
@@ -23,6 +24,7 @@ function Header() {
     const [gifSrc, setGifSrc] = useState<string>('https://ricardohs-images.s3.ca-central-1.amazonaws.com/cart-loop.gif');
 
     // Subscribe to Store Cart.
+    const productData = useAppSelector(selectProducts);
     const cartData = useAppSelector(selectCart);
 
     useEffect(() => {
@@ -42,26 +44,24 @@ function Header() {
     }, [cartData])
 
     useEffect(() => {
-        const productService = new ProductService();
-        let isMounted = true;
-
         const onSearch = async () => {
             setSearchValue(searchValue);
-            const response: ProductModel[] = await productService.get(searchValue);
-            if (isMounted) {
-                setProducts(response);
+            let items;
+            if (productData.products.length > 0) {
+                items = productData.products
+                    .filter((item: ProductModel) => item.name.toLowerCase()
+                        .includes(searchValue.toLowerCase())
+                    );
+                setProducts(items);
+            } else {
+                dispatch(getProductsAsync());
             }
         }
 
         if (isSearchOpened) {
             onSearch();
         }
-
-
-        return () => {
-            isMounted = false;
-        };
-    }, [searchValue, isSearchOpened]);
+    }, [searchValue, isSearchOpened, productData.products, dispatch]);
 
     useEffect(() => {
         const handleClickOutside = (event: any): void => {

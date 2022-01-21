@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getProductsAsync, selectProducts } from "../../shared/redux/features/products/product.slice";
+import { selectProducts } from "../../shared/redux/features/products/product.slice";
 import { useAppDispatch, useAppSelector } from "../../shared/redux/hooks";
 
 import Loader from "../../shared/components/loader";
@@ -18,6 +18,7 @@ export default function EditProductPage() {
   const [productPrice, setProductPrice] = useState<string>('');
   const [productImage, setProductImage] = useState<string>('');
   const [productVideo, setProductVideo] = useState<string>('');
+  const productService = new ProductService();
 
 
   const dispatch = useAppDispatch();
@@ -32,17 +33,17 @@ export default function EditProductPage() {
     let selectedProduct: ProductModel | undefined;
 
     const loadProduct = async () => {
-      if (!productsData.products.length) {
+      if (productsData.products.length === 0) {
         selectedProduct = await productService.getById(Number(id));
-        dispatch(getProductsAsync());
       } else {
         selectedProduct = productsData.products.find(item => item.id === Number(id));
-        if (selectedProduct) {
-          setProductName(selectedProduct.name);
-          setProductPrice(selectedProduct.price);
-          setProductImage(selectedProduct.imageSrc);
-          setProductVideo(selectedProduct.videoUrl);
-        }
+      }
+
+      if (selectedProduct) {
+        setProductName(selectedProduct.name);
+        setProductPrice(selectedProduct.price);
+        setProductImage(selectedProduct.imageSrc);
+        setProductVideo(selectedProduct.videoUrl);
       }
 
       if (isMounted) {
@@ -60,9 +61,14 @@ export default function EditProductPage() {
 
 
   const handleSubmit = (event: React.SyntheticEvent) => {
-    event.preventDefault();
-    alert('A name was submitted: ' + productName);
-
+    const data: ProductModel = {
+      name: productName,
+      imageSrc: productImage,
+      videoUrl: productVideo,
+      price: productPrice,
+      id: Number(id)
+    }
+    productService.save(Number(id), data);
   }
 
   return (

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../shared/redux/hooks";
-import { getProductsAsync, selectProducts } from "../../shared/redux/features/products/product.slice";
+import { selectProducts } from "../../shared/redux/features/products/product.slice";
 import { useParams } from "react-router-dom";
 
 import ProductService from "../../shared/services/product.service";
@@ -28,13 +28,12 @@ export default function ProductDetailsPage() {
     const loadProduct = async () => {
       if (!productsData.products.length) {
         selectedProduct = await productService.getById(Number(id));
-        dispatch(getProductsAsync());
       } else {
         selectedProduct = productsData.products.find(item => item.id === Number(id));
       }
 
       if (isMounted) {
-        setProduct(product);
+        setProduct(selectedProduct);
         setIsLoading(false);
       }
     }
