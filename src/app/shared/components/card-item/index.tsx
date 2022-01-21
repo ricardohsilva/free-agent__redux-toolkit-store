@@ -6,14 +6,41 @@ interface IProps {
     name: string;
     imageSrc: string;
     price: string;
+    labelButtonOne: string;
+    labelButtonTwo?: string;
+    backgroundColorOne: 'primary' | 'secondary' | 'warn';
+    backgroundColorTwo?: 'primary' | 'secondary' | 'warn';
     onButtonOneClick: React.Dispatch<number>;
-    onButtonTwoClick: React.Dispatch<number>;
+    onButtonTwoClick?: React.Dispatch<number>;
 }
 
-function CardItem({ id, name, imageSrc, price, onButtonOneClick, onButtonTwoClick }: IProps) {
+function CardItem({
+    id,
+    name,
+    imageSrc,
+    price,
+    labelButtonOne,
+    labelButtonTwo,
+    backgroundColorOne,
+    backgroundColorTwo,
+    onButtonOneClick,
+    onButtonTwoClick
+}: IProps) {
+
+    const getButtonColor = (background: 'primary' | 'secondary' | 'warn'): string => {
+        switch (background) {
+            case 'primary':
+                return '#6f4cb6';
+            case 'secondary':
+                return '#282c34';
+            default:
+                return '#E60965';
+        }
+
+    }
     return (
         <div className={styles.cardItem}>
-             <div className={styles.backgroundImage} style={{ backgroundImage: `url(${imageSrc})` }}></div>
+            <div className={styles.backgroundImage} style={{ backgroundImage: `url(${imageSrc})` }}></div>
 
             <div className={styles.cardInner}>
                 <p>
@@ -25,8 +52,10 @@ function CardItem({ id, name, imageSrc, price, onButtonOneClick, onButtonTwoClic
             </div>
 
             <div className={styles.cardButton}>
-                <Button label='ADD TO CARD' onClick={() => onButtonOneClick(id)}></Button>
-                <Button label='MORE DETAILS' onClick={() => onButtonTwoClick(id)} backgroundColor={'#282c34'}></Button>
+                <Button label={labelButtonOne} onClick={() => onButtonOneClick(id)} backgroundColor={getButtonColor(backgroundColorOne)}></Button>
+                {onButtonTwoClick &&
+                    <Button label={labelButtonTwo ? labelButtonTwo : ''} onClick={() => onButtonTwoClick(id)} backgroundColor={getButtonColor(backgroundColorTwo ? backgroundColorTwo : 'primary')}></Button>
+                }
             </div>
         </div>
     )

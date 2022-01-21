@@ -7,38 +7,38 @@ import ProductService from '../../services/product.service';
 import ProductModel from '../../models/product.model';
 
 import styles from './styles.module.css';
-import cartGif from '../../../../assets/gifs/cart.gif';
-import cartSvg from '../../../../assets/svg/cart.svg';
+import cartImage from '../../../../assets/images/cart.png';
 import reduxLogo from '../../../../assets/images/redux-logo.png';
+import settingsIcon from '../../../../assets/images/settings.png';
 
 function Header() {
     const refResultsWrapper = useRef<HTMLDivElement>(null);
     const firstUpdate = useRef<boolean>(true);
+    const isTimeout = useRef<boolean>(false);
     const navigate = useNavigate();
     const [isSearchOpened, setIsSearchOpened] = useState(false);
     const [shouldAnimateCart, setShouldAnimateCart] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [products, setProducts] = useState<ProductModel[]>([]);
+    const [gifSrc, setGifSrc] = useState<string>('https://ricardohs-images.s3.ca-central-1.amazonaws.com/cart-loop.gif');
 
     // Subscribe to Store Cart.
     const cartData = useAppSelector(selectCart);
 
     useEffect(() => {
-        let isTimeout;
         if (!firstUpdate.current) {
             setShouldAnimateCart(true);
-            if (!isTimeout) {
-                // setIsTimeout(true);
-                isTimeout = true;
+            if (!isTimeout.current) {
+                setGifSrc('https://ricardohs-images.s3.ca-central-1.amazonaws.com/cart-loop.gif')
+                isTimeout.current = true;
                 setTimeout(() => {
-                    isTimeout = false
+                    isTimeout.current = false
+                    setGifSrc('');
                     setShouldAnimateCart(false);
-                }, 3000);
+                }, 1860);
             }
         }
-
         firstUpdate.current = false;
-
     }, [cartData])
 
     useEffect(() => {
@@ -83,7 +83,7 @@ function Header() {
 
         <div className={styles.header}>
             <div className={styles.headerWrapper}>
-                <div>
+                <div onClick={() => navigate('/')}>
                     <h1 className={styles.headerTitle}>Game Store</h1>
                 </div>
 
@@ -95,18 +95,32 @@ function Header() {
                         <div className={styles.headerInputResults}>
                             {products.map(product =>
                                 <div onClick={() => { setIsSearchOpened(false); navigate(`/product/${product.id}`) }} key={product.id} className={styles.headerInputResultsItem}>
-                                    <p>{product.name}</p>
+                                    <div className={styles.backgroundImage} style={{ backgroundImage: `url(${product.imageSrc})` }}></div>
+                                    <p style={{ flex: 3 }}>{product.name.slice(0, 20)}</p>
                                 </div>
                             )}
                         </div>
                     }
-
                 </div>
+                <div className={styles.headerCartContainer}>
+                    <div className={styles.headerCartWrapper}>
+                        <div onClick={() => navigate('/cart')}>
+                            <img src={cartImage} alt='Cart' className={styles.cartImage} />
+                            {shouldAnimateCart &&
+                                <img className={styles.cartGif} src={gifSrc} alt="Animated Cart" />
+                            }
+                        </div>
 
-                <div className={styles.headerCartContainer} onClick={() => navigate('/cart')}>
-                    <img src={cartSvg} alt='Cart' className={styles.cartImage} />
-                    {shouldAnimateCart &&
-                        <img className={styles.cartGif} src={cartGif} alt="Animated Cart" />
+                        <div className={styles.adminContainer} onClick={() => navigate('/settings')}>
+                            <div className={styles.adminItem}>
+                                <img className={styles.settingsIcon} src={settingsIcon} alt='Settings' />
+                            </div>
+                        </div>
+                    </div>
+                    {cartData.cart.length > 0 &&
+                        <div className={styles.headerCartCounter}>
+                            <p className={styles.headerCartCounterText}>{cartData.cart.length}</p>
+                        </div>
                     }
                 </div>
 

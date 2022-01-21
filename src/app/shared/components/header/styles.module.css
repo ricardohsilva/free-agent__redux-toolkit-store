@@ -16,15 +16,28 @@
 }
 
 .headerImage {
+    animation: MoveUpDown 2.5s linear infinite;
     position: absolute;
     transform: scale(0.75);
     z-index: -10;
     max-width: 100vw;
+    top: -30%;
+}
+
+@keyframes MoveUpDown {
+    0%,
+    100% {
+        top: -30%;
+    }
+    50% {
+        top: -23%;
+    }
 }
 
 .headerTitle {
     text-align: center;
     color: #f5f6f7;
+    cursor: pointer;
 }
 
 .headerInputContainer {
@@ -49,13 +62,16 @@
     width: 100%;
     max-height: 25rem;
     overflow-y: auto;
+    z-index: 10;
 }
 
 .headerInputResultsItem {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 2rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    height: 3rem;
     padding: 0.5rem;
     cursor: pointer;
 }
@@ -66,22 +82,85 @@
 }
 
 .headerCartContainer {
-    height: 60px;
     position: relative;
-    margin-top: 1rem;
-    width: 80px;
-    background-color: white;
-    border-radius: 10px;
-    cursor: pointer;
-}
-.cartImage {
-    position: absolute;
-    top: 40%;
-    right: 30%;
 }
 
-.cartGif {
-    height: inherit;
-    width: inherit;
-    border-radius: inherit;
+.headerCartWrapper {
+    height: auto;
+    margin-top: 1rem;
+    width: 150px;
+    cursor: pointer;
+    display: flex;
+}
+.cartImage {
+    z-index: -1;
+}
+
+.cartGif,
+.cartImage {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+}
+
+.adminContainer {
+    position: absolute;
+    right: 0;
+}
+
+.adminItem {
+    height: 56px;
+    width: 56px;
+    border-radius: 50%;
+    border: solid 2px #6f4cb6;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.settingsIcon {
+    animation: Spin 10s linear infinite;
+    width: 50%;
+}
+
+@keyframes Spin {
+    from {
+        -webkit-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+.headerCartCounter {
+    background-color: #e60965;
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    right: 60%;
+    z-index: 0;
+}
+
+.headerCartCounterText {
+    text-align: center;
+    font-size: 12px;
+    color: white;
+    font-weight: bold;
+}
+
+.backgroundImage {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }

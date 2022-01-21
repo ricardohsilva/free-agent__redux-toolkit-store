@@ -1,0 +1,17 @@
+.gridCard {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.totalText{
+    margin-bottom: 1rem;
+    font-weight: bold;
+    color: #6f4cb6;
+}
+
+.emptyCart{
+    text-align: center;
+    color: #E60965;
+}

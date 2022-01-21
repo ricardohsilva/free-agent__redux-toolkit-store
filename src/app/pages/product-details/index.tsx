@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from "../../shared/redux/hooks";
 import { getProductsAsync, selectProducts } from "../../shared/redux/features/products/product.slice";
 import { useParams } from "react-router-dom";
 
-import Header from "../../shared/components/header";
 import ProductService from "../../shared/services/product.service";
 import ProductModel from "../../shared/models/product.model";
 import Loader from "../../shared/components/loader";
@@ -24,14 +23,14 @@ export default function ProductDetailsPage() {
     setIsLoading(true);
     const productService = new ProductService();
     let isMounted: boolean = true;
-    let product: ProductModel | undefined;
+    let selectedProduct: ProductModel | undefined;
 
     const loadProduct = async () => {
       if (!productsData.products.length) {
-        product = await productService.getById(Number(id));
+        selectedProduct = await productService.getById(Number(id));
         dispatch(getProductsAsync());
       } else {
-        product = productsData.products.find(item => item.id === Number(id));
+        selectedProduct = productsData.products.find(item => item.id === Number(id));
       }
 
       if (isMounted) {
@@ -45,39 +44,31 @@ export default function ProductDetailsPage() {
     return () => {
       isMounted = false;
     }
-  }, [productsData, id, dispatch]);
+  }, [productsData.products, id, dispatch]);
 
   return (
+    <div className="responsiveContainer">
+      {isLoading &&
+        <Loader />
+      }
+      {product && !isLoading &&
+        <div>
+          <h1>Product Details - {product?.name}</h1>
 
-    <div>
-      <Header />
-      <div className="responsiveContainer">
-        {isLoading &&
-          <Loader />
-        }
-        {product && !isLoading &&
-          <div>
-            <h1>Product Details - {product?.name}</h1>
+          <div className={styles.detailsContainer}>
 
-            <div className={styles.detailsContainer}>
-              <div className={styles.detailsWrapper}>
+            <div className={styles.detailsRight}>
+              <div className={styles.detailsImage} style={{ backgroundImage: `url(${product.imageSrc})` }}></div>
+              <p><b>Price CAD$ {product.price}</b></p>
+              <Button label={'Add To Cart'} onClick={() => dispatch(addToCart(product))} />
+            </div>
 
-
-                <div className={styles.backgroundImage} style={{ backgroundImage: `url(${product.imageSrc})` }}></div>
-
-                <div className={styles.detailsPriceContainer}>
-                  <p><b>Price CAD$ {product.price}</b></p>
-                  <Button label={'Add To Cart'} onClick={() => dispatch(addToCart(product))} />
-                </div>
-              </div>
-
-              <div className={styles.detailsDivider}></div>
+            <div className={styles.detailsLeft}>
               <iframe className={styles.detailsVideo} src={product.videoUrl} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
             </div>
           </div>
-        }
-      </div>
+        </div>
+      }
     </div>
-
   )
 }

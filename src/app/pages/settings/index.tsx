@@ -1,22 +1,17 @@
 import { useEffect } from "react";
+import { getProductsAsync, selectProducts } from "../../shared/redux/features/products/product.slice";
+import { useAppDispatch, useAppSelector } from "../../shared/redux/hooks";
 import { useNavigate } from "react-router-dom";
 
-import { useAppDispatch, useAppSelector } from "../../shared/redux/hooks";
-import { selectProducts, getProductsAsync } from "../../shared/redux/features/products/product.slice";
-
-import Loader from "../../shared/components/loader";
 import CardItem from "../../shared/components/card-item";
+import Loader from "../../shared/components/loader";
 
 import styles from './styles.module.css';
-import { addToCart } from "../../shared/redux/features/cart/cart.slice";
-
-
-export default function HomePage() {
-  const dispatch = useAppDispatch();
+export default function SettingsPage() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-
-  // Subscribe to Store Products and Cart.
+  // Subscribe to Store Products.
   const productsData = useAppSelector(selectProducts);
 
   // Using Redux Async as soon the Component is loaded.
@@ -26,22 +21,9 @@ export default function HomePage() {
     }
   }, [dispatch, productsData.products.length]);
 
-
-  const onCartAdd = (id: number) => {
-    const product = productsData.products.find((item) => item.id === id);
-    if (product) {
-      dispatch(addToCart(product));
-    }
-  }
-
-  const onButtonTwoClick = (id: number) => {
-    navigate(`/product/${id}`);
-  }
-
-
   return (
     <div className="responsiveContainer">
-      <h1>Products</h1>
+      <h1>Products Settings</h1>
 
       {productsData.isLoading &&
         <Loader />
@@ -57,11 +39,8 @@ export default function HomePage() {
               imageSrc={product.imageSrc}
               price={product.price}
               backgroundColorOne="primary"
-              backgroundColorTwo="secondary"
-              labelButtonOne={'ADD TO CART'}
-              labelButtonTwo={'MORE DETAILS'}
-              onButtonOneClick={(id) => onCartAdd(id)}
-              onButtonTwoClick={(id) => onButtonTwoClick(id)}
+              labelButtonOne={'EDIT'}
+              onButtonOneClick={(id) => navigate(`/settings/${product.id}`)}
             />
           )
         }
