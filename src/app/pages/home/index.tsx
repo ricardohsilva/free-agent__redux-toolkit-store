@@ -47,9 +47,10 @@ export default function HomePage() {
         <Loader />
       }
 
-      <div className={styles.gridCard}>
-        {
-          productsData.products.map((product) =>
+
+      {!productsData.isLoading &&
+        <div className={styles.gridCard}>
+          {productsData.products.map((product) =>
             <CardItem
               key={product.id}
               name={product.name}
@@ -63,8 +64,9 @@ export default function HomePage() {
               onButtonTwoClick={() => onButtonTwoClick(product.id)}
             />
           )
-        }
-      </div>
+          }
+        </div>
+      }
     </div>
   )
 }

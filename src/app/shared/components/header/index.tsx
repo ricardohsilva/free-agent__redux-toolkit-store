@@ -21,14 +21,16 @@ function Header() {
     const [shouldAnimateCart, setShouldAnimateCart] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [products, setProducts] = useState<ProductModel[]>([]);
+    const [cartLength, setCartLength] = useState<number>(0);
     const [gifSrc, setGifSrc] = useState<string>('https://ricardohs-images.s3.ca-central-1.amazonaws.com/cart-loop.gif');
 
     // Subscribe to Store Cart.
     const productData = useAppSelector(selectProducts);
     const cartData = useAppSelector(selectCart);
 
-    useEffect(() => {
-        if (!firstUpdate.current) {
+    useEffect(() => {       
+        if (!firstUpdate.current && cartLength != cartData.cart.length) {
+            setCartLength(cartData.cart.length);
             setShouldAnimateCart(true);
             if (!isTimeout.current) {
                 setGifSrc('https://ricardohs-images.s3.ca-central-1.amazonaws.com/cart-loop.gif')

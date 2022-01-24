@@ -2,12 +2,14 @@ import { useEffect } from "react";
 import { deleteProductAsync, getProductsAsync, selectProducts } from "../../shared/redux/features/products/product.slice";
 import { useAppDispatch, useAppSelector } from "../../shared/redux/hooks";
 import { useNavigate } from "react-router-dom";
+import { updateCartProducts } from "../../shared/redux/features/cart/cart.slice";
 
 import CardItem from "../../shared/components/card-item";
 import Loader from "../../shared/components/loader";
 
 import styles from './styles.module.css';
 import Button from "../../shared/components/button";
+
 export default function SettingsPage() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -21,13 +23,13 @@ export default function SettingsPage() {
     }
   }, [dispatch, productsData.products.length]);
 
-  const onDelete = (id: number) => {
+  const onDelete = async (id: number) => {
     dispatch(deleteProductAsync(id));
   }
 
-  useEffect(() => {
-    console.log(productsData)
-  }, [productsData]);
+  useEffect(() =>{
+    dispatch(updateCartProducts(productsData.products));
+  },[productsData.products]);
 
   return (
     <div className="responsiveContainer">

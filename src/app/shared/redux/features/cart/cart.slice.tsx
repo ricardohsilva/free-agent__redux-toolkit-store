@@ -24,16 +24,28 @@ export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
+        updateCartProducts: (state, action: PayloadAction<ProductModel[]>) => {
+            const updatedCart: ProductModel[] = [];
+            state.cart.forEach((cartItem, index) => {
+                let productItem = action.payload.find(product => product.id === cartItem.id);
+                if (productItem) {
+                    updatedCart.push(productItem);
+                }
+            });
+
+            state.cart = updatedCart;
+            return state
+        },
         addToCart: (state, action: PayloadAction<ProductModel>) => {
             state.cart.push(action.payload)
         },
         removeFromCart: (state, action: PayloadAction<number>) => {
-            const newCart:ProductModel[] =[];
+            const newCart: ProductModel[] = [];
             let isRemoved: boolean = false;
             state.cart.forEach(product => {
-                if(product.id === action.payload && !isRemoved){
+                if (product.id === action.payload && !isRemoved) {
                     isRemoved = true;
-                }else{
+                } else {
                     newCart.push(product);
                 }
             });
@@ -46,6 +58,6 @@ export const cartSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addToCart, removeFromCart } = cartSlice.actions
+export const { addToCart, removeFromCart, updateCartProducts } = cartSlice.actions
 
 export default cartSlice.reducer

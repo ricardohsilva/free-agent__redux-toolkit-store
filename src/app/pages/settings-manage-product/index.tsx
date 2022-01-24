@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getProductByIdAsync, saveProductAsync, selectProducts } from "../../shared/redux/features/products/product.slice";
 import { useAppDispatch, useAppSelector } from "../../shared/redux/hooks";
+import { updateCartProducts } from "../../shared/redux/features/cart/cart.slice";
+
 import Loader from "../../shared/components/loader";
 import ProductModel from "../../shared/models/product.model";
 import styles from './styles.module.css';
@@ -31,7 +33,7 @@ export default function SettingsManageProductsPage() {
     dispatch(getProductByIdAsync(Number(id)));
   }, [dispatch, id]);
 
-  const handleSubmit = (event: React.SyntheticEvent) => {
+  const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     const model: ProductModel = {
       name: productName,
@@ -42,6 +44,11 @@ export default function SettingsManageProductsPage() {
     }
     dispatch(saveProductAsync(model));
   }
+
+
+  useEffect(() =>{
+    dispatch(updateCartProducts(productsData.products));
+  },[productsData.products]);
 
   return (
     <div className="responsiveContainer">

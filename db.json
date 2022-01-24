@@ -1,13 +1,6 @@
 {
   "products": [
     {
-      "name": "200",
-      "imageSrc": "https://static-ca.gamestop.ca/images/products/739712/2med.jpg",
-      "videoUrl": "https://www.youtube.com/embed/WLu7e8RZoYc",
-      "price": "79.00",
-      "id": 3
-    },
-    {
       "id": 4,
       "name": "Nintendo Switch with Neon Blue and Neon Red",
       "imageSrc": "https://static-ca.gamestop.ca/images/products/748258/2med.jpg",
@@ -15,31 +8,24 @@
       "videoUrl": "https://www.youtube.com/embed/J-iUQoV6d2w"
     },
     {
-      "name": "Biogenik Ess XBOX Gaming Headset",
-      "imageSrc": "https://static-ca.gamestop.ca/images/products/755558/3max.jpg",
-      "videoUrl": "https://www.youtube.com/embed/2x7hSm_3wbk",
-      "price": "779.00",
-      "id": 5
-    },
-    {
-      "id": 6,
-      "name": "Mario + Rabbids Sparks of Hope",
+      "name": "Mario + Rabbids Sparks of Hope!",
       "imageSrc": "https://static-ca.gamestop.ca/images/products/761533/3max.jpg",
+      "videoUrl": "https://www.youtube.com/embed/VHIuHMv3t88",
       "price": "99.00",
-      "videoUrl": "https://www.youtube.com/embed/VHIuHMv3t88"
+      "id": 6
     },
     {
-      "id": 7,
-      "name": "Mario + Rabbids Sparks of Hope",
+      "name": "Metroid Dread",
       "imageSrc": "https://assets.nintendo.com/image/upload/c_pad,f_auto,h_613,q_auto,w_1089/ncom/en_US/games/switch/m/metroid-dread-switch/hero?v=2021121623",
+      "videoUrl": "https://www.youtube.com/embed/AOvefm5U250",
       "price": "99.00",
-      "videoUrl": "https://www.youtube.com/embed/AOvefm5U250"
+      "id": 7
     },
     {
-      "name": "https://static-ca.gamestop.ca/images/products/751287/2med.jpg",
+      "name": "Animal Crossing",
       "imageSrc": "https://static-ca.gamestop.ca/images/products/751287/2med.jpg",
       "videoUrl": "https://static-ca.gamestop.ca/images/products/751287/2med.jpg",
-      "price": "1",
+      "price": "99",
       "id": 16
     }
   ]
