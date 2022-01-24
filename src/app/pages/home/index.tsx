@@ -52,7 +52,6 @@ export default function HomePage() {
           productsData.products.map((product) =>
             <CardItem
               key={product.id}
-              id={product.id}
               name={product.name}
               imageSrc={product.imageSrc}
               price={product.price}
@@ -60,8 +59,8 @@ export default function HomePage() {
               backgroundColorTwo="secondary"
               labelButtonOne={'ADD TO CART'}
               labelButtonTwo={'MORE DETAILS'}
-              onButtonOneClick={(id) => onCartAdd(id)}
-              onButtonTwoClick={(id) => onButtonTwoClick(id)}
+              onButtonOneClick={() => onCartAdd(product.id)}
+              onButtonTwoClick={() => onButtonTwoClick(product.id)}
             />
           )
         }

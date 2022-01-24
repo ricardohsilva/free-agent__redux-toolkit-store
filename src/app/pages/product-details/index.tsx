@@ -1,69 +1,49 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../shared/redux/hooks";
-import { selectProducts } from "../../shared/redux/features/products/product.slice";
+import { getProductByIdAsync, selectProducts } from "../../shared/redux/features/products/product.slice";
 import { useParams } from "react-router-dom";
+import { addToCart } from "../../shared/redux/features/cart/cart.slice";
 
-import ProductService from "../../shared/services/product.service";
-import ProductModel from "../../shared/models/product.model";
 import Loader from "../../shared/components/loader";
 import Button from "../../shared/components/button";
 import styles from './styles.module.css';
-import { addToCart } from "../../shared/redux/features/cart/cart.slice";
 
 export default function ProductDetailsPage() {
   const { id } = useParams();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [product, setProduct] = useState<ProductModel | undefined>();
   const dispatch = useAppDispatch();
 
   // Subscribe to Store Products and Cart.
   const productsData = useAppSelector(selectProducts);
 
   useEffect(() => {
-    setIsLoading(true);
-    const productService = new ProductService();
-    let isMounted: boolean = true;
-    let selectedProduct: ProductModel | undefined;
-
-    const loadProduct = async () => {
-      if (!productsData.products.length) {
-        selectedProduct = await productService.getById(Number(id));
-      } else {
-        selectedProduct = productsData.products.find(item => item.id === Number(id));
-      }
-
-      if (isMounted) {
-        setProduct(selectedProduct);
-        setIsLoading(false);
-      }
-    }
-
-    loadProduct();
-
-    return () => {
-      isMounted = false;
-    }
-  }, [productsData.products, id, dispatch]);
+    dispatch(getProductByIdAsync(Number(id)));
+  }, [dispatch, id]);
 
   return (
     <div className="responsiveContainer">
-      {isLoading &&
+      {productsData.isLoading &&
         <Loader />
       }
-      {product && !isLoading &&
+
+      {!productsData.selectedProduct?.id && !productsData.isLoading &&
+        <h3 className={styles.notFound}>
+          <b>Product Not found</b>
+        </h3>
+      }
+      {productsData.selectedProduct?.id && !productsData.isLoading &&
         <div>
-          <h1>Product Details - {product?.name}</h1>
+          <h1>Product Details - {productsData.selectedProduct.name}</h1>
 
           <div className={styles.detailsContainer}>
 
             <div className={styles.detailsRight}>
-              <div className={styles.detailsImage} style={{ backgroundImage: `url(${product.imageSrc})` }}></div>
-              <p><b>Price CAD$ {product.price}</b></p>
-              <Button label={'Add To Cart'} onClick={() => dispatch(addToCart(product))} />
+              <div className={styles.detailsImage} style={{ backgroundImage: `url(${productsData.selectedProduct.imageSrc})` }}></div>
+              <p><b>Price CAD$ {productsData.selectedProduct.price}</b></p>
+              <Button label={'Add To Cart'} onClick={() => { if (productsData.selectedProduct) dispatch(addToCart(productsData.selectedProduct)) }} />
             </div>
 
             <div className={styles.detailsLeft}>
-              <iframe className={styles.detailsVideo} src={product.videoUrl} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+              <iframe className={styles.detailsVideo} src={productsData.selectedProduct.videoUrl} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
             </div>
           </div>
         </div>

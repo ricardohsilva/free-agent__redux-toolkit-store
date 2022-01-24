@@ -3,5 +3,6 @@ export default interface ProductModel {
     name: string,
     imageSrc: string,
     price: string,
-    videoUrl: string
+    videoUrl: string,
+    isUpdating?: boolean
 }

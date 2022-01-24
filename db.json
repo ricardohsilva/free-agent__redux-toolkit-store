@@ -1,25 +1,11 @@
 {
   "products": [
     {
-      "name": "Animal Crossing",
-      "imageSrc": "https://static-ca.gamestop.ca/images/products/751287/2med.jpg",
-      "videoUrl": "https://www.youtube.com/embed/sRWjpjNVOCM",
-      "price": "79.00",
-      "id": 1
-    },
-    {
-      "id": 2,
-      "name": "Mario Kart 8 Deluxe",
-      "imageSrc": "https://static-ca.gamestop.ca/images/products/729218/2med.jpg",
-      "price": "89.00",
-      "videoUrl": "https://www.youtube.com/embed/GHz6s5iVpYU"
-    },
-    {
-      "id": 3,
-      "name": "Super Smash Bross. Ultimate",
+      "name": "200",
       "imageSrc": "https://static-ca.gamestop.ca/images/products/739712/2med.jpg",
+      "videoUrl": "https://www.youtube.com/embed/WLu7e8RZoYc",
       "price": "79.00",
-      "videoUrl": "https://www.youtube.com/embed/WLu7e8RZoYc"
+      "id": 3
     },
     {
       "id": 4,
@@ -29,11 +15,11 @@
       "videoUrl": "https://www.youtube.com/embed/J-iUQoV6d2w"
     },
     {
-      "id": 5,
       "name": "Biogenik Ess XBOX Gaming Headset",
       "imageSrc": "https://static-ca.gamestop.ca/images/products/755558/3max.jpg",
+      "videoUrl": "https://www.youtube.com/embed/2x7hSm_3wbk",
       "price": "779.00",
-      "videoUrl": "https://www.youtube.com/embed/2x7hSm_3wbk"
+      "id": 5
     },
     {
       "id": 6,
@@ -48,6 +34,13 @@
       "imageSrc": "https://assets.nintendo.com/image/upload/c_pad,f_auto,h_613,q_auto,w_1089/ncom/en_US/games/switch/m/metroid-dread-switch/hero?v=2021121623",
       "price": "99.00",
       "videoUrl": "https://www.youtube.com/embed/AOvefm5U250"
+    },
+    {
+      "name": "https://static-ca.gamestop.ca/images/products/751287/2med.jpg",
+      "imageSrc": "https://static-ca.gamestop.ca/images/products/751287/2med.jpg",
+      "videoUrl": "https://static-ca.gamestop.ca/images/products/751287/2med.jpg",
+      "price": "1",
+      "id": 16
     }
   ]
 }

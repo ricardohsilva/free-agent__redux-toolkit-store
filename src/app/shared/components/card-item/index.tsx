@@ -1,8 +1,9 @@
 import styles from './styles.module.css';
 import Button from '../button';
+import Loader from '../loader';
 
 interface IProps {
-    id: number;
+    isLoading?: boolean
     name: string;
     imageSrc: string;
     price: string;
@@ -10,12 +11,11 @@ interface IProps {
     labelButtonTwo?: string;
     backgroundColorOne: 'primary' | 'secondary' | 'warn';
     backgroundColorTwo?: 'primary' | 'secondary' | 'warn';
-    onButtonOneClick: React.Dispatch<number>;
-    onButtonTwoClick?: React.Dispatch<number>;
+    onButtonOneClick: React.Dispatch<boolean>;
+    onButtonTwoClick?: React.Dispatch<boolean>;
 }
 
 function CardItem({
-    id,
     name,
     imageSrc,
     price,
@@ -23,6 +23,7 @@ function CardItem({
     labelButtonTwo,
     backgroundColorOne,
     backgroundColorTwo,
+    isLoading,
     onButtonOneClick,
     onButtonTwoClick
 }: IProps) {
@@ -39,23 +40,31 @@ function CardItem({
 
     }
     return (
-        <div className={styles.cardItem}>
-            <div className={styles.backgroundImage} style={{ backgroundImage: `url(${imageSrc})` }}></div>
-
-            <div className={styles.cardInner}>
-                <p>
-                    <b>CAD${price}</b>
-                </p>
-                <p className={styles.cardName}>
-                    <b>{name}</b>
-                </p>
-            </div>
-
-            <div className={styles.cardButton}>
-                <Button label={labelButtonOne} onClick={() => onButtonOneClick(id)} backgroundColor={getButtonColor(backgroundColorOne)}></Button>
-                {onButtonTwoClick &&
-                    <Button label={labelButtonTwo ? labelButtonTwo : ''} onClick={() => onButtonTwoClick(id)} backgroundColor={getButtonColor(backgroundColorTwo ? backgroundColorTwo : 'primary')}></Button>
+        <div className={styles.cardContainer} >
+            <div className={styles.cardItem}>
+                {isLoading &&
+                    <>
+                        <div className={styles.cardOverlay}></div>
+                        <div className={styles.cardLoaderContainer}>
+                            <Loader />
+                        </div>
+                    </>
                 }
+                <div className={styles.backgroundImage} style={{ backgroundImage: `url(${imageSrc})` }}></div>
+                <div className={styles.cardInner}>
+                    <p>
+                        <b>CAD${price}</b>
+                    </p>
+                    <p className={styles.cardName}>
+                        <b>{name}</b>
+                    </p>
+                </div>
+                <div className={styles.cardButton}>
+                    <Button label={labelButtonOne} onClick={() => onButtonOneClick(true)} backgroundColor={getButtonColor(backgroundColorOne)}></Button>
+                    {onButtonTwoClick &&
+                        <Button label={labelButtonTwo ? labelButtonTwo : ''} onClick={() => onButtonTwoClick(true)} backgroundColor={getButtonColor(backgroundColorTwo ? backgroundColorTwo : 'primary')}></Button>
+                    }
+                </div>
             </div>
         </div>
     )

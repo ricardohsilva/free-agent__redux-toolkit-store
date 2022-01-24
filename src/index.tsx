@@ -8,7 +8,7 @@ import ProductDetailsPage from "./app/pages/product-details";
 import CartPage from "./app/pages/cart";
 import Header from "./app/shared/components/header";
 import SettingsPage from "./app/pages/settings";
-import EditProductPage from "./app/pages/edit-product";
+import SettingsManageProductsPage from "./app/pages/settings-manage-product";
 
 export default function App() {
   return (
@@ -22,7 +22,8 @@ export default function App() {
             <Route path="/cart" element={<CartPage />}></Route>
             <Route path="/product/:id" element={<ProductDetailsPage />}></Route>
             <Route path="/settings" element={<SettingsPage />}></Route>
-            <Route path="settings/:id" element={<EditProductPage />}></Route>
+            <Route path="settings/products" element={<SettingsManageProductsPage />}></Route>
+            <Route path="settings/products/:id" element={<SettingsManageProductsPage />}></Route>
           </Routes>
         </div>
 

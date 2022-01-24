@@ -1,89 +1,65 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { selectProducts } from "../../shared/redux/features/products/product.slice";
+import { getProductByIdAsync, saveProductAsync, selectProducts } from "../../shared/redux/features/products/product.slice";
 import { useAppDispatch, useAppSelector } from "../../shared/redux/hooks";
-
 import Loader from "../../shared/components/loader";
-
-import ProductService from "../../shared/services/product.service";
 import ProductModel from "../../shared/models/product.model";
-
 import styles from './styles.module.css';
+import React from "react";
+import Button from "../../shared/components/button";
 
-export default function EditProductPage() {
+export default function SettingsManageProductsPage() {
   const { id } = useParams();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [product, setProduct] = useState<ProductModel | undefined>();
+  const dispatch = useAppDispatch();
   const [productName, setProductName] = useState<string>('');
   const [productPrice, setProductPrice] = useState<string>('');
   const [productImage, setProductImage] = useState<string>('');
   const [productVideo, setProductVideo] = useState<string>('');
-  const productService = new ProductService();
-
-
-  const dispatch = useAppDispatch();
 
   // Subscribe to Store Products.
   const productsData = useAppSelector(selectProducts);
 
   useEffect(() => {
-    setIsLoading(true);
-    const productService = new ProductService();
-    let isMounted: boolean = true;
-    let selectedProduct: ProductModel | undefined;
+    setProductName(productsData.selectedProduct ? productsData.selectedProduct.name : '');
+    setProductPrice(productsData.selectedProduct ? productsData.selectedProduct.price : '');
+    setProductImage(productsData.selectedProduct ? productsData.selectedProduct.imageSrc : '');
+    setProductVideo(productsData.selectedProduct ? productsData.selectedProduct.videoUrl : '');
 
-    const loadProduct = async () => {
-      if (productsData.products.length === 0) {
-        selectedProduct = await productService.getById(Number(id));
-      } else {
-        selectedProduct = productsData.products.find(item => item.id === Number(id));
-      }
+  }, [productsData.selectedProduct, id]);
 
-      if (selectedProduct) {
-        setProductName(selectedProduct.name);
-        setProductPrice(selectedProduct.price);
-        setProductImage(selectedProduct.imageSrc);
-        setProductVideo(selectedProduct.videoUrl);
-      }
-
-      if (isMounted) {
-        setProduct(selectedProduct);
-        setIsLoading(false);
-      }
-    }
-
-    loadProduct();
-
-    return () => {
-      isMounted = false;
-    }
-  }, [productsData.products, id, dispatch]);
-
+  useEffect(() => {
+    dispatch(getProductByIdAsync(Number(id)));
+  }, [dispatch, id]);
 
   const handleSubmit = (event: React.SyntheticEvent) => {
-    const data: ProductModel = {
+    event.preventDefault();
+    const model: ProductModel = {
       name: productName,
       imageSrc: productImage,
       videoUrl: productVideo,
       price: productPrice,
       id: Number(id)
     }
-    productService.save(Number(id), data);
+    dispatch(saveProductAsync(model));
   }
 
   return (
     <div className="responsiveContainer">
-      {isLoading &&
+      {productsData.isLoading &&
         <Loader />
       }
-
-      {!isLoading &&
+      {!productsData.isLoading &&
         <>
-          <h1>Edit Product - {product?.name}</h1>
-
-
+          {productsData.selectedProduct &&
+            <h1>Edit Product - {productsData.selectedProduct?.name}</h1>
+          }
+          {!productsData.selectedProduct &&
+            <h1>Create a Product</h1>
+          }
           <div className={styles.formContainer}>
-            <div className={styles.detailsImage} style={{ backgroundImage: `url(${productImage})` }}></div>
+            {productsData.selectedProduct &&
+              <div className={styles.detailsImage} style={{ backgroundImage: `url(${productImage})` }}></div>
+            }
             <form className={styles.formWrapper} onSubmit={handleSubmit}>
               <label>Name</label>
               <input
@@ -126,7 +102,9 @@ export default function EditProductPage() {
                 placeholder="Insert Video URL..."
               />
 
-              <input type="submit" value="Update" />
+              <div className={styles.buttonContainer}>
+                <Button label={productsData.selectedProduct ? 'Save' : 'Create'} />
+              </div>
             </form>
           </div>
         </>

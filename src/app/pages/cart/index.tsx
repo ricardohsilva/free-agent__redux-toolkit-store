@@ -38,7 +38,7 @@ export default function CartPage() {
           cartData.cart.map((product) =>
             <CardItem
               key={`${Math.floor(Math.random() * 100000)}-${product.id}`}
-              id={product.id}
+              isLoading={product.isUpdating}
               name={product.name}
               imageSrc={product.imageSrc}
               price={product.price}
@@ -46,8 +46,8 @@ export default function CartPage() {
               labelButtonTwo="REMOVE"
               backgroundColorOne="secondary"
               backgroundColorTwo="warn"
-              onButtonOneClick={(id) => moreDetails(id)}
-              onButtonTwoClick={(id) => remove(id)}
+              onButtonOneClick={() => moreDetails(product.id)}
+              onButtonTwoClick={() => remove(product.id)}
             />
           )
         }
