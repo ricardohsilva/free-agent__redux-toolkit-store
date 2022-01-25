@@ -1,11 +1,11 @@
 {
   "products": [
     {
-      "id": 4,
       "name": "Nintendo Switch with Neon Blue and Neon Red",
       "imageSrc": "https://static-ca.gamestop.ca/images/products/748258/2med.jpg",
+      "videoUrl": "https://www.youtube.com/embed/J-iUQoV6d2w",
       "price": "499.00",
-      "videoUrl": "https://www.youtube.com/embed/J-iUQoV6d2w"
+      "id": 4
     },
     {
       "name": "Mario + Rabbids Sparks of Hope!",
